@@ -1,8 +1,8 @@
-package com.andre1337.lust.lexer;
+package com.andre1337.lust.parser.lexer;
 
-import com.andre1337.lust.token.Token;
+import com.andre1337.lust.parser.token.Token;
 import com.andre1337.lust.utils.Tuple;
-import static com.andre1337.lust.token.Token.Type.*;
+import static com.andre1337.lust.parser.token.Token.Type.*;
 
 import java.util.*;
 
@@ -195,7 +195,7 @@ public class Lexer {
     }
 
     private void addToken(Token.Type tokenType) {
-        String lexeme = this.src_substr();
+        String lexeme = this.source.substring(this.start, this.current);
         this.addTokenWithLexeme(tokenType, lexeme);
     }
 
@@ -221,10 +221,6 @@ public class Lexer {
     private char peekNext() {
         if (this.current + 1 >= this.source.length()) return '\0';
         return this.source.charAt(this.current++);
-    }
-
-    private String src_substr() {
-        return this.source.substring(this.start + 1, this.current - 1);
     }
 
     private boolean isDigit(char ch) {
@@ -256,7 +252,7 @@ public class Lexer {
 
         this.advance();
 
-        String val = this.src_substr();
+        String val = this.source.substring(this.start + 1, this.current - 1);
         this.addTokenWithLexeme(String, val);
     }
 
@@ -284,7 +280,7 @@ public class Lexer {
             this.advance();
         }
 
-        String text = this.src_substr();
+        String text = this.source.substring(this.start, this.current);
         Token.Type tokenType = this.keywords.getOrDefault(text, Identifier);
 
         this.addToken(tokenType);

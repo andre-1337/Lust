@@ -1,4 +1,4 @@
-package com.andre1337.lust.token;
+package com.andre1337.lust.parser.token;
 
 public class Token {
     public Type tokenType;
